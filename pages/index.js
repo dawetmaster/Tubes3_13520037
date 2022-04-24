@@ -3,28 +3,33 @@ import clientPromise from '../lib/mongodb'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import '@fontsource/ubuntu'
+import Footer from '../components/footer'
+import Header from '../components/header'
+import AlertError from '../components/alerterror'
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  FormHelperText,
+} from '@chakra-ui/react'
 
-export default function Home({ isConnected }) {
+export default function Home({isConnected}) {
   return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className={styles.container}>
+      <Header />
 
       <main className={styles.main}>
-        <h1>Privyet!</h1>
+        <FormControl m='1em'>
+          <FormLabel>Nama Penyakit</FormLabel>
+          <Input id="penyakit" />
+          <FormHelperText>Masukkan nama penyakit</FormHelperText>
+        </FormControl>
+        <AlertError children={'Not okay'} />
       </main>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
+      <footer className={styles.footer}>
+        <Footer />
       </footer>
     </div>
   )
