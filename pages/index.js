@@ -5,14 +5,27 @@ import styles from '../styles/Home.module.css'
 import '@fontsource/ubuntu'
 import Footer from '../components/footer'
 import Header from '../components/header'
+import AlertError from '../components/alerterror'
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  FormHelperText,
+} from '@chakra-ui/react'
 
-export default function Home({ isConnected }) {
+export default function Home({isConnected}) {
   return (
     <div className={styles.container}>
       <Header />
 
       <main className={styles.main}>
-        <h1>Privyet!</h1>
+        <FormControl m='1em'>
+          <FormLabel>Nama Penyakit</FormLabel>
+          <Input id="penyakit" />
+          <FormHelperText>Masukkan nama penyakit</FormHelperText>
+        </FormControl>
+        <AlertError children={'Not okay'} />
       </main>
 
       <footer className={styles.footer}>
