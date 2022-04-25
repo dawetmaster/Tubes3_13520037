@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react'
 import FormPenyakit from '../components/formpenyakit'
 import FormPrediksi from '../components/formprediksi'
+import FormRiwayat from '../components/formriwayat'
 
 export default function Home({isConnected}) {
 
@@ -43,7 +44,7 @@ export default function Home({isConnected}) {
               <FormPrediksi />
             </TabPanel>
             <TabPanel>
-              <p> Tab 3</p>
+              <FormRiwayat />
             </TabPanel>
           </TabPanels>      
         </Tabs>
