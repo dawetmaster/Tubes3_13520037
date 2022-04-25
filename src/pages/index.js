@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import '@fontsource/ubuntu'
@@ -20,7 +19,7 @@ import {
   Tab,
   TabPanel,
 } from '@chakra-ui/react'
-import HookForm from '../components/hookform'
+import FormPenyakit from '../components/formpenyakit'
 
 export default function Home({isConnected}) {
 
@@ -37,7 +36,7 @@ export default function Home({isConnected}) {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <HookForm />
+              <FormPenyakit />
             </TabPanel>
             <TabPanel>
               <p> Tab 2</p>
@@ -54,27 +53,4 @@ export default function Home({isConnected}) {
       </footer>
     </div>
   )
-}
-
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the folloing code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
 }
