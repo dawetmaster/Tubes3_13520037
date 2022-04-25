@@ -7,25 +7,46 @@ import Footer from '../components/footer'
 import Header from '../components/header'
 import AlertError from '../components/alerterror'
 import {
+  Button,
+  ButtonGroup,
   FormControl,
   FormLabel,
   Input,
   FormErrorMessage,
   FormHelperText,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from '@chakra-ui/react'
+import HookForm from '../components/hookform'
 
 export default function Home({isConnected}) {
+
   return (
     <div className={styles.container}>
       <Header />
 
       <main className={styles.main}>
-        <FormControl m='1em'>
-          <FormLabel>Nama Penyakit</FormLabel>
-          <Input id="penyakit" />
-          <FormHelperText>Masukkan nama penyakit</FormHelperText>
-        </FormControl>
-        <AlertError children={'Not okay'} />
+        <Tabs>
+          <TabList>
+            <Tab>Input Penyakit</Tab>
+            <Tab>Prediksi Penyakit</Tab>
+            <Tab>Riwayat Penyakit</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <HookForm />
+            </TabPanel>
+            <TabPanel>
+              <p> Tab 2</p>
+            </TabPanel>
+            <TabPanel>
+              <p> Tab 3</p>
+            </TabPanel>
+          </TabPanels>      
+        </Tabs>
       </main>
 
       <footer className={styles.footer}>

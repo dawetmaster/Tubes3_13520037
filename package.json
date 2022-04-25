@@ -17,8 +17,9 @@
     "framer-motion": "^6",
     "mongoose": "^6.3.1",
     "next": "12.1.5",
-    "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.30.0"
   },
   "devDependencies": {
     "eslint": "8.13.0",
