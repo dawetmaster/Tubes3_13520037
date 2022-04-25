@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import AlertError from './alerterror'
 
-export default function FormPenyakit() {
+export default function FormPrediksi() {
   const {
     handleSubmit,
     register,
@@ -64,12 +64,23 @@ export default function FormPenyakit() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor='name'>Nama Penyakit</FormLabel>
+          <FormLabel htmlFor='name'>Nama Pengguna</FormLabel>
           <Input
             id='name'
             placeholder='name'
             accept='text/plain'
             {...register('name', {
+              required: 'Nama pengguna harus diisi',
+              minLength: { value: 3, message: 'Panjang nama minimal tiga huruf' },
+            })}
+            mb={4}
+          />
+          <FormLabel htmlFor='disease'>Nama Penyakit</FormLabel>
+          <Input
+            id='disease'
+            placeholder='disease'
+            accept='text/plain'
+            {...register('disease', {
               required: 'Nama penyakit harus diisi',
               minLength: { value: 3, message: 'Panjang nama penyakit minimal tiga huruf' },
             })}
