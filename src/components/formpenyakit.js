@@ -9,9 +9,10 @@ import {
   InputGroup,
   Box,
 } from '@chakra-ui/react'
-import checkDNA from '../lib/checkDNA'
 import AlertGenerator from './alertGenerator'
 import sanitizeString from '../lib/stringSanitizer'
+import { getFileContent } from '../lib/getFileContent'
+import { getFileExtension } from '../lib/getFileExtension'
 
 export default function FormPenyakit() {
   const {
@@ -22,10 +23,6 @@ export default function FormPenyakit() {
 
   const [errorComponent, setErrorComponent] = React.useState(null)
   const [submit, setSubmit] = React.useState(false)
-
-  function getFileExtension(filename) {
-    return filename.split('.').pop()
-  }
 
   async function onSubmit(values) {
     setSubmit(true)
@@ -72,18 +69,9 @@ export default function FormPenyakit() {
       let disease = await diseasePromise.json()
       setErrorComponent(AlertGenerator({ message: disease.message, status: 'success' }))
       setSubmit(false)
-    })
-  }
-
-  // function to get file content
-  function getFileContent(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsText(file)
-      reader.onload = () => resolve({
-        content: reader.result
-      })
-      reader.onerror = reject
+    }).catch(error => {
+      setErrorComponent(AlertGenerator({ message: error.message, status: 'error' }))
+      setSubmit(false)
     })
   }
 
@@ -94,7 +82,7 @@ export default function FormPenyakit() {
           <FormLabel htmlFor='name'>Nama Penyakit</FormLabel>
           <Input
             id='name'
-            placeholder='name'
+            placeholder='Contoh: TBC'
             accept='text/plain'
             {...register('name', {
               required: 'Nama penyakit harus diisi',
@@ -115,7 +103,7 @@ export default function FormPenyakit() {
             {errors.name && errors.name.message}
           </FormErrorMessage>
         </FormControl>
-        <Button mt={4} colorScheme='teal' isLoading={submit} type='submit'>
+        <Button mt={4} width='100%' colorScheme='teal' isLoading={submit} type='submit'>
           Submit
         </Button>
       </form>
