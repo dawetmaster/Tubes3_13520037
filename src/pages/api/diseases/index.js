@@ -18,11 +18,13 @@ export default async function handler(req, res) {
             break;
         case 'POST':
             try {
-                const disease = await Disease.create(req.body);
+                const newDisease = JSON.parse(req.body);
 
-                res.status(201).json({ success: true, data: disease });
+                const disease = await Disease.create(newDisease);
+
+                res.status(201).json({ success: true, data: disease, message: 'Penyakit berhasil ditambahkan' });
             } catch (error) {
-                res.status(400).json({ success: false });
+                res.status(400).json({ success: false, message: error.message });
             }
             break;
         default:

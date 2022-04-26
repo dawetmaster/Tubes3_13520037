@@ -9,7 +9,7 @@ import {
   InputGroup,
   Box,
 } from '@chakra-ui/react'
-import AlertError from './alerterror'
+import AlertError from './alert'
 
 export default function FormRiwayat() {
   const {
@@ -38,12 +38,12 @@ export default function FormRiwayat() {
     console.log(getFileExtension(values.file[0].name))
     // check if file is plain text, otherwise generate error file type
     if (getFileExtension(values.file[0].name) !== 'txt') {
-      setErrorComponent(generateErrorComponent({ message: 'File harus berupa plain text' }))
+      setErrorComponent(<AlertError>File harus berupa plain text</AlertError>)
       return
     }
     // check if file is not empty, otherwise generate error file empty
     if (values.file[0].size === 0) {
-      setErrorComponent(generateErrorComponent({ message: 'File tidak boleh kosong' }))
+      setErrorComponent(<AlertError>File harus berupa plain text</AlertError>)
       return
     }
     getFileContent(values.file[0])

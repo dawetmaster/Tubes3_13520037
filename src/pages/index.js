@@ -4,7 +4,6 @@ import styles from '../styles/Home.module.css'
 import '@fontsource/ubuntu'
 import Footer from '../components/footer'
 import Header from '../components/header'
-import AlertError from '../components/alerterror'
 import {
   Button,
   ButtonGroup,

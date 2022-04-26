@@ -1,11 +1,8 @@
-const DNAregex = /^[ACGT]*$/;
-
-// DNA SEQUENCE checker from string
-function checkDNA(dna) {
-    if (dna.match(DNAregex)) {
-        return true;
-    }
-    return false;
+// check DNA sequence by regex
+function checkDNA(fileContent) {
+  const regex = /^[ATCG]+$/
+  const result = regex.test(fileContent)
+  return result
 }
 
 export default checkDNA;

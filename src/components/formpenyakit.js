@@ -9,7 +9,9 @@ import {
   InputGroup,
   Box,
 } from '@chakra-ui/react'
-import AlertError from './alerterror'
+import checkDNA from '../lib/checkDNA'
+import AlertGenerator from './alertGenerator'
+import sanitizeString from '../lib/stringSanitizer'
 
 export default function FormPenyakit() {
   const {
@@ -19,45 +21,70 @@ export default function FormPenyakit() {
   } = useForm()
 
   const [errorComponent, setErrorComponent] = React.useState(null)
-  const [fileContent, setFileContent] = React.useState('')
+  const [submit, setSubmit] = React.useState(false)
 
   function getFileExtension(filename) {
     return filename.split('.').pop()
   }
 
-  function generateErrorComponent(error) {
-    return (
-      <AlertError>
-        {error.message}
-      </AlertError>
-    )
-  }
-
-  function onSubmit(values) {
-    console.log(values.name)
-    console.log(getFileExtension(values.file[0].name))
+  async function onSubmit(values) {
+    setSubmit(true)
     // check if file is plain text, otherwise generate error file type
     if (getFileExtension(values.file[0].name) !== 'txt') {
-      setErrorComponent(generateErrorComponent({ message: 'File harus berupa plain text' }))
+      setErrorComponent(<AlertGenerator message='File harus berupa .txt' status='error' />)
+      setSubmit(false)
       return
     }
     // check if file is not empty, otherwise generate error file empty
     if (values.file[0].size === 0) {
-      setErrorComponent(generateErrorComponent({ message: 'File tidak boleh kosong' }))
+      setErrorComponent(AlertGenerator({ message: 'File tidak boleh kosong', status: 'error' }))
+      setSubmit(false)
       return
     }
-    getFileContent(values.file[0])
-    console.log(fileContent)
+    let promise = getFileContent(values.file[0])
+    promise.then(async (result) => {
+      // validate DNA sequence
+      let stringStatusPromise = await fetch(`/api/checkDNA`, {
+        method: "POST",
+        body: sanitizeString(result.content),
+      })
+      if (stringStatusPromise.status !== 200) {
+        let stringStatus = await stringStatusPromise.json()
+        setErrorComponent(AlertGenerator({ message: stringStatus.message, status: 'error' }))
+        setSubmit(false)
+        return
+      }
+      let stringStatus = await stringStatusPromise.json()
+      // post new disease to database
+      let diseasePromise = await fetch(`/api/diseases`, {
+        method: "POST",
+        body: JSON.stringify({
+          name: values.name,
+          dna: stringStatus.dna,
+        }),
+      })
+      if (diseasePromise.status !== 201) {
+        let disease = await diseasePromise.json()
+        setErrorComponent(AlertGenerator({ message: disease.message, status: 'error' }))
+        setSubmit(false)
+        return
+      }
+      let disease = await diseasePromise.json()
+      setErrorComponent(AlertGenerator({ message: disease.message, status: 'success' }))
+      setSubmit(false)
+    })
   }
 
   // function to get file content
   function getFileContent(file) {
-    const reader = new FileReader()
-    reader.readAsText(file)
-    reader.onload = function () {
-      let content = reader.result
-      setFileContent(content)
-    }
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsText(file)
+      reader.onload = () => resolve({
+        content: reader.result
+      })
+      reader.onerror = reject
+    })
   }
 
   return (
@@ -88,7 +115,7 @@ export default function FormPenyakit() {
             {errors.name && errors.name.message}
           </FormErrorMessage>
         </FormControl>
-        <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
+        <Button mt={4} colorScheme='teal' isLoading={submit} type='submit'>
           Submit
         </Button>
       </form>
