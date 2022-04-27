@@ -1,4 +1,4 @@
-import lccs from "./dnaSimilarity";
+import lccs from "./dnaSimilarity.js";
 
 function buildLastOccurences(pattern) {
     var lastOccur = new Array(128);
@@ -21,7 +21,7 @@ function matchingWithBM(text, pattern) {
     var i = m-1;
     
     if (i > n-1) {
-        return -1;
+        return false;
     }
 
     var j = m-1;

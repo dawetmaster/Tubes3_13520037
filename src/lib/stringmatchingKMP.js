@@ -1,4 +1,4 @@
-import lccs from "./dnaSimilarity";
+import lccs from "./dnaSimilarity.js";
 
 function borderFunction(pattern) {
     var fail = new Array(pattern.length);
@@ -9,7 +9,7 @@ function borderFunction(pattern) {
     var i = 1;
 
     while (i < m) {
-        if (text.charAt(i) == pattern.charAt(j)) {
+        if (pattern.charAt(i) == pattern.charAt(j)) {
             fail[i] = j + 1;
             i++;
             j++;

@@ -8,6 +8,7 @@ function lccs(text, pattern) {
     var table = [];
 
     for (let i = 0; i <= n; i++) {
+        table[i] = [];
         for (let j = 0; j <= m; j++) {
             if (i == 0 || j == 0) {
                 table[i][j] = 0;
@@ -26,7 +27,7 @@ function lccs(text, pattern) {
         }
     }
 
-    return (index - length) / m * 100;
+    return (index - (index - length)) / m * 100;
 }
 
 export default lccs;
