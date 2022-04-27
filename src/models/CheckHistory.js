@@ -14,6 +14,10 @@ const CheckHistorySchema = new mongoose.Schema ({
         required: true,
         unique: true
     },
+    similarity: {
+        type: String,
+        required: true
+    },
     result: {
         type: Boolean,
         required: true
