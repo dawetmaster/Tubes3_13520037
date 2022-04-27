@@ -1,3 +1,5 @@
+import lccs from "./dnaSimilarity";
+
 function borderFunction(pattern) {
     var fail = new Array(pattern.length);
     fail[0] = 0;
@@ -49,7 +51,7 @@ function matchingWithKMP(text, pattern) {
         }
     }
 
-    return false;
+    return lccs(text, pattern) < 80 ? false : true;
 }
 
 export default matchingWithKMP;

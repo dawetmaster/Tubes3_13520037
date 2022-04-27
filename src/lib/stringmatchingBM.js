@@ -1,3 +1,5 @@
+import lccs from "./dnaSimilarity";
+
 function buildLastOccurences(pattern) {
     var lastOccur = new Array(128);
 
@@ -40,7 +42,7 @@ function matchingWithBM(text, pattern) {
         }
     } while (i <= n-1);
 
-    return false;
+    return lccs(text, pattern) < 80 ? false : true;
 }
 
 export default matchingWithBM;
