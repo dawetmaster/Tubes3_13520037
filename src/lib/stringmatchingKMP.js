@@ -1,5 +1,5 @@
 function borderFunction(pattern) {
-    var fail = [];
+    var fail = new Array(pattern.length);
     fail[0] = 0;
 
     var m = pattern.length;
@@ -7,7 +7,7 @@ function borderFunction(pattern) {
     var i = 1;
 
     while (i < m) {
-        if (pattern[i] == pattern[j]) {
+        if (text.charAt(i) == pattern.charAt(j)) {
             fail[i] = j + 1;
             i++;
             j++;
@@ -34,7 +34,7 @@ function matchingWithKMP(text, pattern) {
     var j = 0;
 
     while (i < n) {
-        if (text[i] == pattern[j]) {
+        if (text.charAt(i) == pattern.charAt(j)) {
             if (j == m - 1) {
                 return true;
             }

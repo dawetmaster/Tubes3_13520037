@@ -1,12 +1,12 @@
 function buildLastOccurences(pattern) {
-    var lastOccur = [];
+    var lastOccur = new Array(128);
 
     for (let i = 0; i < 128; i++) {
         lastOccur[i] = -1;
     }
     
     for (let i = 0; i < pattern.length; i++) {
-        lastOccur[pattern[i]] = i;
+        lastOccur[pattern.charAt(i)] = i;
     }
 
     return lastOccur;
@@ -24,7 +24,7 @@ function matchingWithBM(text, pattern) {
 
     var j = m-1;
     do {
-        if (text[i] == pattern[j]) {
+        if (text.charAt(i) == pattern.charAt(j)) {
             if (j == 0) {
                 return true;
             }
@@ -34,7 +34,7 @@ function matchingWithBM(text, pattern) {
             }
         }
         else {
-            var lo = lastOccur[text[i]];
+            var lo = lastOccur[text.charAt(i)];
             i = i + m - Math.min(j, 1+lo);
             j = m - 1;
         }
