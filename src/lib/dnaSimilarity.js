@@ -3,8 +3,7 @@ function lccs(text, pattern) {
     var n = text.length;
     var m = pattern.length;
 
-    var index = -1;
-    var length = -1;
+    var lenghtOfLongestSubsequence = -1;
     var table = [];
 
     for (let i = 0; i <= n; i++) {
@@ -20,14 +19,13 @@ function lccs(text, pattern) {
                 table[i][j] = 0;
             }
 
-            if (table[i][j] > length) {
-                length = table[i][j];
-                index = i;
+            if (table[i][j] > lenghtOfLongestSubsequence) {
+                lenghtOfLongestSubsequence = table[i][j];
             }
         }
     }
 
-    return (index - (index - length)) / m * 100;
+    return lenghtOfLongestSubsequence / m * 100;
 }
 
 export default lccs;
