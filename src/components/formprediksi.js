@@ -13,34 +13,37 @@ import AlertGenerator from './alertGenerator'
 import sanitizeString from '../lib/stringSanitizer'
 import { getFileContent } from '../lib/getFileContent'
 import { getFileExtension } from '../lib/getFileExtension'
+import axios from 'axios'
 
-export default function FormPrediksi(props) {
+function FormPrediksi() {
+
+  const [props, setProps] = React.useState({
+    data: [],
+    loading: true,
+  })
+
+  const [errorComponent, setErrorComponent] = React.useState(
+    AlertGenerator({ message: 'Memuat database penyakit...', status: 'info' })
+  )
+
+  React.useEffect(() => {
+    axios.get('/api/diseases')
+      .then(res => {
+        console.log(res.data)
+        setProps({
+          data: res.data.data,
+          loading: false,
+        })
+      })
+  }, [])
+
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm()
-
-  const [errorComponent, setErrorComponent] = React.useState(
-    <AlertGenerator message={props.message} status={props.state} />
-  )
-  const [fileContent, setFileContent] = React.useState('')
-
-  function getFileExtension(filename) {
-    return filename.split('.').pop()
-  }
-
-  function generateErrorComponent(error) {
-    return (
-      <AlertError>
-        {error.message}
-      </AlertError>
-    )
-  }
+  } = useForm()  
 
   function onSubmit(values) {
-    console.log(values.name)
-    console.log(getFileExtension(values.file[0].name))
     // check if file is plain text, otherwise generate error file type
     if (getFileExtension(values.file[0].name) !== 'txt') {
       setErrorComponent(<AlertError>File harus berupa plain text</AlertError>)
@@ -53,16 +56,6 @@ export default function FormPrediksi(props) {
     }
     getFileContent(values.file[0])
     console.log(fileContent)
-  }
-
-  // function to get file content
-  function getFileContent(file) {
-    const reader = new FileReader()
-    reader.readAsText(file)
-    reader.onload = function () {
-      let content = reader.result
-      setFileContent(content)
-    }
   }
 
   return (
@@ -91,7 +84,9 @@ export default function FormPrediksi(props) {
             })}
             mb={4}
           >
-
+            {props.data.map(disease => (
+              <option key={disease.id} value={disease.id}>{disease.name}</option>
+            ))}
           </Select>
           <FormLabel htmlFor='file'>Input File (*.txt)</FormLabel>
           <Input
@@ -110,32 +105,11 @@ export default function FormPrediksi(props) {
           Submit
         </Button>
       </form>
-      <Box mt={4}>
+      <Box mt={4} visibility={props.loading ? 'visible' : 'hidden'}>
         {errorComponent}
       </Box>
     </div>
   )
 }
 
-export async function getServerSideProps(ctx) {
-  // get diseases
-  const Diseases = await fetch('api/diseases', {
-    method: "GET"
-  })
-  if (Diseases.status !== 200) {
-    return { props: {
-      success: 'false',
-      state: 'warning',
-      message: 'There seems a problem with your connection...'
-    }}
-  } 
-  else {
-    let DiseasesData = Diseases.json()
-    return { props: {
-      success: 'true',
-      state: 'success',
-      message: 'You are connected to the database.',
-      data: DiseasesData.data
-    }}
-  }
-}
+export default FormPrediksi;

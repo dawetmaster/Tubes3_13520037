@@ -6,7 +6,6 @@ import {
   FormControl,
   Input,
   Button,
-  InputGroup,
   Box,
 } from '@chakra-ui/react'
 import AlertGenerator from './alertGenerator'
