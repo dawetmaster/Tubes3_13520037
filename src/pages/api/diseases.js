@@ -1,5 +1,5 @@
-import dbConnect from '../../../utils/dbConnect'
-import Disease from '../../../models/Disease'
+import dbConnect from '../../utils/dbConnect'
+import Disease from '../../models/Disease'
 
 dbConnect();
 

@@ -8,6 +8,9 @@ import {
   Button,
   Select,
   Box,
+  Radio,
+  RadioGroup,
+  Stack,
 } from '@chakra-ui/react'
 import AlertGenerator from './alertGenerator'
 import sanitizeString from '../lib/stringSanitizer'
@@ -34,6 +37,7 @@ function FormPrediksi() {
           data: res.data.data,
           loading: false,
         })
+        setErrorComponent(null)
       })
   }, [])
 
@@ -43,19 +47,80 @@ function FormPrediksi() {
     formState: { errors, isSubmitting },
   } = useForm()  
 
+  const [submit, setSubmit] = React.useState(false)
+  const [method, setMethod] = React.useState('KMP')
+
   function onSubmit(values) {
-    // check if file is plain text, otherwise generate error file type
+    setSubmit(true)
+    console.log(values)
+    // check file extension
     if (getFileExtension(values.file[0].name) !== 'txt') {
-      setErrorComponent(<AlertError>File harus berupa plain text</AlertError>)
-      return
+      setErrorComponent(
+        AlertGenerator({ message: 'File harus berupa .txt', status: 'error' })
+      )
+    // check file size
+    } else if (values.file[0].size === 0) {
+      setErrorComponent(
+        AlertGenerator({ message: 'File tidak boleh kosong', status: 'error' })
+      )
+    } else {
+      let promise = getFileContent(values.file[0])
+      promise.then(async (result) => {
+        // validate DNA sequence
+        let stringStatusPromise = await fetch(`/api/checkDNA`, {
+          method: "POST",
+          body: sanitizeString(result.content),
+        })
+        if (stringStatusPromise.status !== 200) {
+          let stringStatus = await stringStatusPromise.json()
+          setErrorComponent(
+            AlertGenerator({ message: stringStatus.message, status: 'error' })
+          )
+        }
+        let stringStatus = await stringStatusPromise.json()
+        // post check similarity request
+        let similarityPromise = await fetch(`/api/checkSimilarity`, {
+          method: "POST",
+          body: JSON.stringify({
+            name: values.name,
+            disease: values.disease,
+            dna: stringStatus.dna,
+            method: values.method,
+          }),
+        })
+        if (similarityPromise.status !== 200) {
+          let similarity = await similarityPromise.json()
+          setErrorComponent(
+            AlertGenerator({ message: similarity.message, status: 'error' })
+          )
+        }
+        let similarity = await similarityPromise.json()
+        console.log(similarity.data)
+        // add to db by histories
+        let addHistoryPromise = await fetch(`/api/histories`, {
+          method: "POST",
+          body: JSON.stringify(similarity.data),
+        })
+        if (addHistoryPromise.status !== 201) {
+          let addHistory = await addHistoryPromise.json()
+          setErrorComponent(
+            AlertGenerator({ message: addHistory.message, status: 'error' })
+          )
+        }
+        let addHistory = await addHistoryPromise.json()
+        console.log(addHistory)
+        setErrorComponent(
+          AlertGenerator({ message: addHistory.message, status: 'success' })
+        )
+        
+      }).catch(err => {
+        console.log(err)
+        setErrorComponent(
+          AlertGenerator({ message: err.message, status: 'error' })
+        )
+      })
     }
-    // check if file is not empty, otherwise generate error file empty
-    if (values.file[0].size === 0) {
-      setErrorComponent(<AlertError>File tidak boleh kosong</AlertError>)
-      return
-    }
-    getFileContent(values.file[0])
-    console.log(fileContent)
+    setSubmit(false)
   }
 
   return (
@@ -97,15 +162,42 @@ function FormPrediksi() {
             })}
             mb={4}
           />
+          <FormLabel htmlFor='method'>Metode</FormLabel>
+          <RadioGroup>
+            <Stack direction='row' spacing={4} mb={4}>
+              <Radio
+                colorScheme='teal'
+                value='KMP'
+                {...register
+                  ("method", 
+                  { required: true }
+                  )
+                }
+              >
+                KMP
+              </Radio>
+              <Radio
+                colorScheme='teal'
+                value='BM'
+                {...register
+                  ("method", 
+                  { required: true }
+                  )
+                }
+              >
+                BM
+              </Radio>
+            </Stack>
+          </RadioGroup>      
           <FormErrorMessage>
             {errors.name && errors.name.message}
           </FormErrorMessage>
         </FormControl>
-        <Button mt={4} width='100%' colorScheme='teal' isLoading={isSubmitting} type='submit'>
+        <Button mt={4} width='100%' colorScheme='teal' isLoading={submit} type='submit'>
           Submit
         </Button>
       </form>
-      <Box mt={4} visibility={props.loading ? 'visible' : 'hidden'}>
+      <Box mt={4}>
         {errorComponent}
       </Box>
     </div>

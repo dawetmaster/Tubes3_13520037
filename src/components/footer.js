@@ -1,9 +1,12 @@
 import Image from 'next/image'
+import dateToString from '../lib/dateToString';
 import styles from "../styles/Home.module.css"
 
 const Footer = () => {
+  const today = dateToString(new Date());
   return (
     <div>
+      <p>{today}</p>
       <p>
         Dibuat oleh:
       </p>

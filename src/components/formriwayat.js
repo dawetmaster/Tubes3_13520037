@@ -64,7 +64,7 @@ export default function FormRiwayat() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor='name'>Nama Pengguna</FormLabel>
+          <FormLabel htmlFor='name'>Tanggal Periksa</FormLabel>
           <Input
             id='name'
             placeholder='name'
@@ -83,15 +83,6 @@ export default function FormRiwayat() {
             {...register('disease', {
               required: 'Nama penyakit harus diisi',
               minLength: { value: 3, message: 'Panjang nama penyakit minimal tiga huruf' },
-            })}
-            mb={4}
-          />
-          <FormLabel htmlFor='file'>Input File (*.txt)</FormLabel>
-          <Input
-            type="file"
-            name='file'
-            {...register('file', {
-              required: 'File DNA harus diunggah',
             })}
             mb={4}
           />
