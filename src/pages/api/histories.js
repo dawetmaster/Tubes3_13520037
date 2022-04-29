@@ -34,7 +34,7 @@ export default async function handler(req, res) {
                     data.patient_name + ' - ' +
                     data.disease_name + ' - ' +
                     Number(data.similarity).toFixed(2) + '% - ' +
-                    data.result;
+                    data.result + ". Waktu eksekusi: " + tmp.timeDiff;
                 
                 res.status(201).json({ success: true, data: history, message: msg });
             } catch (error) {

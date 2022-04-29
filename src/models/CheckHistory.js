@@ -12,7 +12,6 @@ const CheckHistorySchema = new mongoose.Schema ({
     disease_name: {
         type: String,
         required: true,
-        unique: true
     },
     similarity: {
         type: String,

@@ -101,13 +101,12 @@ function FormPrediksi() {
           method: "POST",
           body: JSON.stringify(similarity.data),
         })
-        if (addHistoryPromise.status !== 201) {
-          let addHistory = await addHistoryPromise.json()
+        let addHistory = await addHistoryPromise.json()
+        if (addHistoryPromise.status !== 201) { 
           setErrorComponent(
             AlertGenerator({ message: addHistory.message, status: 'error' })
           )
         }
-        let addHistory = await addHistoryPromise.json()
         console.log(addHistory)
         setErrorComponent(
           AlertGenerator({ message: addHistory.message, status: 'success' })

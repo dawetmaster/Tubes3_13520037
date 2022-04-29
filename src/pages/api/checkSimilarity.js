@@ -30,7 +30,8 @@ export default async function handler(req, res) {
             patient_name: textData.name,
             disease_name: textData.disease,
             similarity: similarityValue,
-            result: similarityStatus
+            result: similarityStatus,
+            timeDiff: timeDiff
         }
 
         const message = "Hasil prediksi penyakit Anda: " +
@@ -38,8 +39,7 @@ export default async function handler(req, res) {
             textData.name + " - " +
             textData.disease + " - " +
             similarityValue + "% - " +
-            similarityStatus + ". Waktu eksekusi adalah " +
-            timeDiff + " miliseconds";
+            similarityStatus;
 
         res.status(200).json({
             success: true,
