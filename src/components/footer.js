@@ -11,7 +11,7 @@ const Footer = () => {
         Dibuat oleh:
       </p>
       <p>
-        13520037 - M. Akmal Arifin
+        13520025 - M. Akmal Arifin
       </p>
       <p>
         13520067 - Farnas Rozaan I.
