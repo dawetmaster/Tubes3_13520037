@@ -76,6 +76,8 @@ function FormPrediksi() {
           setErrorComponent(
             AlertGenerator({ message: stringStatus.message, status: 'error' })
           )
+          setSubmit(false)
+          return
         }
         let stringStatus = await stringStatusPromise.json()
         // post check similarity request
@@ -93,6 +95,8 @@ function FormPrediksi() {
           setErrorComponent(
             AlertGenerator({ message: similarity.message, status: 'error' })
           )
+          setSubmit(false)
+          return
         }
         let similarity = await similarityPromise.json()
         console.log(similarity.data)
@@ -106,6 +110,8 @@ function FormPrediksi() {
           setErrorComponent(
             AlertGenerator({ message: addHistory.message, status: 'error' })
           )
+          setSubmit(false)
+          return
         }
         console.log(addHistory)
         setErrorComponent(
