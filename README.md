@@ -25,23 +25,6 @@ List the ready features here:
 - Predict Disease
 - History
 
-
-## Screenshots
-<details>
-  <summary>Input Disease</summary>
-  ![input disease](./screenshots/input_penyakit.png)
- </details>
- <details>
-  <summary>Predict Disease</summary>
-  ![input disease](./screenshots/prediksi_penyakit.png)
- </details>
- <details>
-  <summary>History</summary>
-  ![history](./screenshots/riwayat_penyakit.png)
- </details>
-<!-- If you have screenshots you'd like to share, include them here. -->
-
-
 ## Setup
 To run this web application on your local follow this steps:
 1. Clone this repository
@@ -58,3 +41,9 @@ Project is: _complete_
 * **Muhammad Akmal Arifin** - *13520037*
 * **Farnas Rozaan I.** - *13520067*
 * **Andika Naufal Hilmy** - *13520098*
+
+## Screenshots
+ ![input disease](screenshots/input_penyakit.png)
+ ![predict disease](screenshots/prediksi_penyakit.png)
+ ![history](screenshots/riwayat_penyakit.png)
+<!-- If you have screenshots you'd like to share, include them here. -->
