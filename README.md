@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DNA Pattern Matching
+> This small project is created for IF2211 Algorithm Strategies assignment. This project is about pattern matching for detecting diseases by checking the similiarity of the DNA. It will required the DNA of the disease and the patient. It will show the similiriaty of DNA diseases in the patient's DNA.
+> Live demo [_here_](https://tubes3-stima-five.vercel.app/). <!-- If you have the project hosted somewhere, include the link here. -->
 
-## Getting Started
+## Table of Contents
+* [General Info](#general-information)
+* [Technologies Used](#technologies-used)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
+* [Acknowledgements](#acknowledgements)
+* [Contact](#contact)
+<!-- * [License](#license) -->
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## General Information
+This project is about String Matching and Regular Expression. String Matching and Regular Expression are used for DNA Pattern Matching to predict patient disease by looking at its DNA. The algorithm that been used for String Matching are Knuth-Morris-Pratt algorithm and Boyer-Moore algorithm. You can choose one of them in the web application. This project is one of the assignment that given in IF2211 Algorithm Strategies.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
+List the ready features here:
+- Input Disease
+- Predict Disease
+- History
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Screenshots
+<details>
+  <summary>Input Disease</summary>
+  ![input disease](./screenshots/input_penyakit.png)
+ </details>
+ <details>
+  <summary>Predict Disease</summary>
+  ![input disease](./screenshots/prediksi_penyakit.png)
+ </details>
+ <details>
+  <summary>History</summary>
+  ![history](./screenshots/riwayat_penyakit.png)
+ </details>
+<!-- If you have screenshots you'd like to share, include them here. -->
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## Setup
+To run this web application on your local follow this steps:
+1. Clone this repository
+2. Open the folder using Command Promt
+3. Run ```cd src```
+4. Run ```npm install```, wait until the installation is completed
+5. Run ```yarn run dev```
+6. Open your browser, and go to (localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+## Project Status
+Project is: _complete_
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Authors
+* **Muhammad Akmal Arifin** - *13520037*
+* **Farnas Rozaan I.** - *13520067*
+* **Andika Naufal Hilmy** - *13520098*
