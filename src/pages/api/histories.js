@@ -29,12 +29,12 @@ export default async function handler(req, res) {
                 }
                 console.log(data);
                 const history = await CheckHistory.create(data);
-                const msg = 'Berhasil menambahkan data :' + 
+                const msg = 'Berhasil menambahkan data: ' + 
                     dateToString(data.date) + ' - ' +
                     data.patient_name + ' - ' +
                     data.disease_name + ' - ' +
                     Number(data.similarity).toFixed(2) + '% - ' +
-                    data.result + ". Waktu eksekusi: " + tmp.timeDiff;
+                    data.result + ". Waktu eksekusi: " + tmp.timeDiff + " ms";
                 
                 res.status(201).json({ success: true, data: history, message: msg });
             } catch (error) {
