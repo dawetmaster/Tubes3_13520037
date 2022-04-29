@@ -14,12 +14,15 @@ export default async function handler(req, res) {
 
         const similarityValue = lccs(textData.dna, diseaseData.dna);
         let similarityStatus;
+        var startTime = new Date();
         if (textData.method === 'KMP') {
             similarityStatus = matchingWithKMP(textData.dna, diseaseData.dna);
         }
         else {
             similarityStatus = matchingWithBM(textData.dna, diseaseData.dna);
         }
+        var endTime = new Date();
+        const timeDiff = endTime - startTime;
 
         const today = new Date();
         const data = {
@@ -35,7 +38,8 @@ export default async function handler(req, res) {
             textData.name + " - " +
             textData.disease + " - " +
             similarityValue + "% - " +
-            similarityStatus;
+            similarityStatus + ". Waktu eksekusi adalah " +
+            timeDiff + " miliseconds";
 
         res.status(200).json({
             success: true,
