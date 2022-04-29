@@ -1,5 +1,5 @@
 export default function searchTermsRegex(string) {
-    const diseaseOnlyPattern = /^\s*(\b[0-9a-zA-Z\-\s\']+\b)\s*$/
+    const diseaseOnlyPattern = /^\s*(\b[a-zA-Z]+[a-zA-Z0-9\-\s\']*\b)\s*$/
     const dateAndMonthAndYearPattern = /^\s*(\d{1,2})\s*(\bJanuari\b|\bFebruari\b|\bMaret\b|\bApril\b|\bMei\b|\bJuni\b|\bJuli\b|\bAgustus\b|\bSeptember\b|\bOktober\b|\bNovember\b|\bDesember\b)\s*(\d{4})\s*$/
     const ddMMyyyySlashPattern = /^\s*(\d{1,2})\/(\d{1,2})\/(\d{4})\s*$/
     const ddMMyyyyHyphenPattern = /^\s*(\d{1,2})\-(\d{1,2})\-(\d{4})\s*$/
